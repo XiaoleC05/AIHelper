@@ -1,67 +1,73 @@
-# AIHelper — 提示词工坊
+# AIHelper
 
-> 将模糊需求转化为精准提示词。生成、优化、记忆，一站式管理。
+将模糊的自然语言需求转化为结构化的精准提示词，并建立可检索的提示词记忆库。
 
-## 背景
+## Features
 
-与 AI 对话时，提示词的质量直接影响输出质量。但用户常常面临以下问题：
+- 分析原始提示词的缺失要素并自动补全
+- 将自然语言描述转化为包含角色、上下文、输出格式的完整提示词
+- 内置编程、写作、翻译、学习等分类模板
+- 按标签归类历史提示词，支持全文检索
+- 基于历史使用自动推荐相关提示词
 
-- 用模糊的自然语言描述需求，AI 返回的结果往往不如预期
-- 手动反复调整提示词耗时且低效，还容易忘记哪个版本效果更好
-- 偶尔产出一条高质量的提示词，却在聊天记录中难以回溯
+## Architecture
 
-AIHelper 针对这三个问题：将模糊需求转化为结构化提示词，一键优化现有提示词，并建立可检索的记忆库。
+```text
+Browser
+  ↓
+React Frontend (Oxelia51 unified UI)
+  ↓
+Go API Layer (prompt processing, template management)
+  ↓        ↓
+PostgreSQL    LLM API (user-provided key)
+```
 
-## 功能
+在线版运行于 Oxelia51 平台。Go 后端负责规则补全和模板管理，大模型 API 由用户自行提供。桌面版使用 SQLite 替代 PostgreSQL，通过 Go 二进制内嵌 React 前端运行。
 
-| 功能 | 优先级 | 说明 |
-|------|--------|------|
-| **提示词优化** | ⭐1 | 粘贴原始提示词 → 分析不足 → 输出优化版本 |
-| **提示词生成** | ⭐2 | 自然语言描述需求 → 生成结构化提示词 |
-| **模板库** | ⭐3 | 内置编程/写作/翻译/学习等模板，支持创建与分享 |
-| **记忆管理** | ⭐4 | 标签分类、全文搜索、智能推荐历史提示词 |
+## Requirements
 
-## 优化原理
+- 在线版：Oxelia51 平台（Go + PostgreSQL + React）
+- 桌面版：独立可执行文件，无需运行时依赖
+- 大模型 API Key（OpenAI、Anthropic 等）
 
-采用两阶段处理：
+## Installation
 
-1. **规则补全**：检测提示词中缺失的关键要素（角色、上下文、输出格式、约束条件）并自动补充
-2. **模型精修**：将补全后的提示词交由大模型进行最终润色
+### 桌面版
 
-输出结果为包含角色定义、任务描述、输出格式和质量约束的完整提示词。
+从 [GitHub Releases](https://github.com/XiaoleC05/AIHelper/releases) 下载 `AIHelper.exe`。
 
-## 技术栈
+### 在线版
 
-| 环境 | 后端 | 数据库 | 前端 |
-|------|------|--------|------|
-| 在线（Oxelia51） | Go | PostgreSQL | React |
-| 桌面（exe） | Go | SQLite | 内嵌 React |
+在线版集成于 Oxelia51 平台，参见 [Oxelia51 部署指南](https://github.com/XiaoleC05/Oxelia51)。
 
-## 费用说明
-
-AIHelper 本身不提供 API 服务。用户需要自行准备大模型 API Key，支持 OpenAI、Anthropic 等主流服务商。Key 仅在本地存储，不上传至服务器。
-
-## 使用方式
+## Usage
 
 ### 在线
 
-1. 访问 [oxelia51.com](https://oxelia51.com) 注册登录
-2. 从工具菜单打开 AIHelper
-3. 在设置中填入 API Key
-4. 开始使用
+1. 访问 [oxelia51.com](https://oxelia51.com) 注册并登录
+2. 进入 AIHelper 工具页
+3. 在设置中填入大模型 API Key
+4. 输入需求或粘贴待优化的提示词
 
 ### 桌面
 
-1. 从 [GitHub Releases](https://github.com/XiaoleC05/AIHelper/releases) 下载 `AIHelper.exe`
-2. 双击运行
-3. 填入 API Key，全部在本地运行
+1. 双击 `AIHelper.exe` 启动
+2. 填入 API Key，所有数据存储在本地
 
-## 开发路线
+## Roadmap
 
-- [ ] 优化与生成功能（优先级 1-2）
-- [ ] 模板库与分享（优先级 3）
-- [ ] 记忆系统与智能推荐（优先级 4）
+- [ ] 提示词优化与生成功能
+- [ ] 模板库及创建、分享功能
+- [ ] 记忆系统与智能推荐
 
-## 开发状态
+## Contributing
 
-概念阶段，尚未开发。
+1. Fork 本仓库
+2. 创建功能分支 (`git checkout -b feature/xxx`)
+3. 提交变更 (`git commit -m 'Add xxx'`)
+4. 推送分支 (`git push origin feature/xxx`)
+5. 提交 Pull Request
+
+## License
+
+This project is licensed under the MIT License.

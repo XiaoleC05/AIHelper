@@ -1,71 +1,73 @@
-# AIHelper — Prompt Generator, Optimizer & Memory Manager
+# AIHelper
 
-> Stop writing prompts from scratch. Let AIHelper craft, refine, and remember your best prompts.
-
-## Why AIHelper?
-
-When working with AI (ChatGPT, Claude, etc.), the quality of your prompt directly determines the quality of the output. But most people face the same problems:
-
-- Describing what you want in vague natural language leads to mediocre results
-- Tweaking prompts manually is tedious, and you lose track of what worked
-- Great prompts get buried in chat history, never to be found again
-
-**AIHelper** solves all three. Turn rough ideas into structured prompts, optimize existing ones with one click, and keep a searchable memory of everything that worked.
+Transform vague natural language requirements into structured, precise prompts. Build and search a reusable prompt memory library.
 
 ## Features
 
-| Feature | What It Does |
-|---------|-------------|
-| **Prompt Optimizer** | Paste your prompt → AI analyzes weaknesses → outputs an improved version |
-| **Prompt Generator** | Describe what you need in plain language → get a structured, production-ready prompt |
-| **Template Library** | Ready-to-use templates for coding, writing, translation, learning, and more |
-| **Prompt Memory** | Save all your prompts with tags, full-text search, and smart recommendations |
+- Analyze prompt weaknesses and fill missing elements automatically
+- Convert natural language descriptions into complete prompts with role, context, and output format
+- Built-in templates for coding, writing, translation, and learning
+- Tag-based categorization of historical prompts with full-text search
+- Smart recommendations based on usage history
 
-## How It Works
+## Architecture
 
-AIHelper uses a two-stage optimization engine:
+```text
+Browser
+  ↓
+React Frontend (Oxelia51 unified UI)
+  ↓
+Go API Layer (prompt processing, template management)
+  ↓        ↓
+PostgreSQL    LLM API (user-provided key)
+```
 
-1. **Rule-based preprocessing** — detects missing elements (role, context, format, constraints) and fills gaps
-2. **LLM refinement** — sends the preprocessed prompt to an AI model for final polishing
+The online version runs on the Oxelia51 platform. The Go backend handles rule-based preprocessing and template management, while the LLM API is user-provided. The desktop version uses SQLite instead of PostgreSQL and embeds the React frontend within the Go binary.
 
-The result is a prompt that includes proper role definition, clear task description, output format, and quality constraints — things most people forget to specify.
+## Requirements
 
-## Tech Stack
+- Online: Oxelia51 platform (Go, PostgreSQL, React)
+- Desktop: standalone executable, no runtime dependencies
+- LLM API key (OpenAI, Anthropic, or compatible providers)
 
-| Environment | Backend | Database | Frontend | Special |
-|-------------|---------|----------|----------|---------|
-| Online (Oxelia51) | Go | PostgreSQL | React | LLM API |
-| Desktop (exe) | Go | SQLite | Embedded React | LLM API |
+## Installation
 
-- Online version shares the Oxelia51 platform's PostgreSQL + Redis instances
-- Desktop version compiles to a single `.exe` with zero dependencies
+### Desktop
 
-## API Key
+Download `AIHelper.exe` from [GitHub Releases](https://github.com/XiaoleC05/AIHelper/releases).
 
-AIHelper does **not** provide its own AI API. You must bring your own API key from any supported provider (OpenAI, Anthropic, etc.). Your key is stored locally and never leaves your machine.
+### Online
 
-## Getting Started
+Integrated into the Oxelia51 platform. See [Oxelia51 deployment guide](https://github.com/XiaoleC05/Oxelia51).
 
-### Online (via Oxelia51)
+## Usage
 
-1. Visit [oxelia51.com](https://oxelia51.com) and sign in
-2. Go to AIHelper in the tools menu
-3. Enter your API key in settings
-4. Start optimizing prompts
+### Online
 
-### Desktop (exe)
+1. Visit [oxelia51.com](https://oxelia51.com), register and sign in
+2. Open AIHelper from the tools menu
+3. Enter your LLM API key in settings
+4. Describe your requirements or paste a prompt to optimize
 
-1. Download `AIHelper.exe` from [GitHub Releases](https://github.com/XiaoleC05/AIHelper/releases)
-2. Run the executable — it starts a local web interface
-3. Enter your API key
-4. Everything runs locally, nothing is sent to any server
+### Desktop
+
+1. Double-click `AIHelper.exe` to start
+2. Enter your API key. All data is stored locally.
 
 ## Roadmap
 
-- [ ] Prompt Optimizer & Generator (Priority 1-2)
-- [ ] Template Library with sharing (Priority 3)
-- [ ] Memory system with smart recommendations (Priority 4)
+- [ ] Prompt optimization and generation
+- [ ] Template library with creation and sharing
+- [ ] Memory system with smart recommendations
 
-## Status
+## Contributing
 
-Concept phase. Development not yet started.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/xxx`)
+3. Commit your changes (`git commit -m 'Add xxx'`)
+4. Push the branch (`git push origin feature/xxx`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License.
