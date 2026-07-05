@@ -1,0 +1,8 @@
+{
+  "slug": "aihelper",
+  "name": "AIHelper",
+  "description": "提示词助手",
+  "online_capable": true,
+  "github_repo": "XiaoleC05/AIHelper",
+  "release_url": "https://github.com/XiaoleC05/AIHelper/releases"
+}
