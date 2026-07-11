@@ -48,9 +48,9 @@ type UserSettings struct {
 }
 
 type UpdateSettingsRequest struct {
-	APIKey  string `json:"api_key"`
-	APIBase string `json:"api_base"`
-	Model   string `json:"model"`
+	APIKey  *string `json:"api_key"`
+	APIBase string  `json:"api_base"`
+	Model   string  `json:"model"`
 }
 
 type EnhanceRequest struct {

@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/XiaoleC05/AIHelper/internal/db"
+	"github.com/XiaoleC05/AIHelper/internal/llm"
 	"github.com/XiaoleC05/AIHelper/internal/model"
 	"github.com/gin-gonic/gin"
 )
@@ -46,7 +47,7 @@ func (h *EnhanceHandler) Enhance(c *gin.Context) {
 
 	settings, err := h.settingsRepo.GetByUser(c.Request.Context(), userID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 
@@ -58,6 +59,11 @@ func (h *EnhanceHandler) Enhance(c *gin.Context) {
 	apiBase := settings.APIBase
 	if apiBase == "" {
 		apiBase = "https://api.openai.com/v1"
+	}
+
+	if err := llm.ValidateAPIBase(apiBase); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "无效的 API 地址"})
+		return
 	}
 
 	enhanced, err := callLLM(apiBase, settings.APIKey, settings.Model, req.Content)

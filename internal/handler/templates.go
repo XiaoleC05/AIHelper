@@ -20,7 +20,7 @@ func (h *TemplateHandler) List(c *gin.Context) {
 
 	templates, err := h.repo.List(c.Request.Context(), category)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 

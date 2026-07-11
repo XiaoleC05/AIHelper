@@ -37,7 +37,7 @@ func (h *PromptHandler) List(c *gin.Context) {
 
 	prompts, err := h.repo.List(c.Request.Context(), userID, search, category, tag, favorite)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 
@@ -62,7 +62,7 @@ func (h *PromptHandler) Create(c *gin.Context) {
 
 	prompt, err := h.repo.Create(c.Request.Context(), userID, req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 
@@ -83,7 +83,7 @@ func (h *PromptHandler) Get(c *gin.Context) {
 
 	prompt, err := h.repo.GetByID(c.Request.Context(), id, userID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if prompt == nil {
@@ -114,7 +114,7 @@ func (h *PromptHandler) Update(c *gin.Context) {
 
 	prompt, err := h.repo.Update(c.Request.Context(), id, userID, req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if prompt == nil {
@@ -138,7 +138,7 @@ func (h *PromptHandler) Delete(c *gin.Context) {
 	}
 
 	if err := h.repo.Delete(c.Request.Context(), id, userID); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 
@@ -159,7 +159,7 @@ func (h *PromptHandler) ToggleFavorite(c *gin.Context) {
 
 	prompt, err := h.repo.ToggleFavorite(c.Request.Context(), id, userID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 	if prompt == nil {

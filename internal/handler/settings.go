@@ -24,7 +24,7 @@ func (h *SettingsHandler) Get(c *gin.Context) {
 
 	settings, err := h.repo.GetByUser(c.Request.Context(), userID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 
@@ -54,7 +54,7 @@ func (h *SettingsHandler) Update(c *gin.Context) {
 
 	settings, err := h.repo.Upsert(c.Request.Context(), userID, req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		respondInternalError(c, err)
 		return
 	}
 
