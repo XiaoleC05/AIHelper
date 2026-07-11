@@ -69,6 +69,8 @@ func main() {
 
 		api.GET("/settings", settingsHandler.Get)
 		api.PUT("/settings", settingsHandler.Update)
+
+		api.GET("/stats", handler.Stats)
 	}
 
 	srv := &http.Server{
